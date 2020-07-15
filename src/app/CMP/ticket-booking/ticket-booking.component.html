@@ -1,0 +1,68 @@
+<div class="jumbotron">
+  <h4>Book Ticket</h4>
+  <hr>
+  <div *ngIf="bookTicketHideShow == 1">
+    <form [formGroup]="ticketBooking">
+      <div class="form-group">
+        <label> Select show : </label>
+        <label class="radio-inline">
+          <input type="radio" formControlName="show" value="1" (change)="showSelect()"> Show 1
+        </label>
+        <label class="radio-inline">
+          <input type="radio" formControlName="show" value="2" (change)="showSelect()"> Show 2
+        </label>
+        <label class="radio-inline">
+          <input type="radio" formControlName="show" value="3" (change)="showSelect()"> Show 3
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label *ngFor="let order of showSelected[0].Gold">
+          <input type="checkbox" [checked]="order.status == 1" [disabled]="order.status == 1" [value]="order.id"
+            (change)="onCheckboxChange(1,$event)">
+          {{order.sheetName}}
+        </label>
+      </div>
+      <div class="form-group">
+        <label *ngFor="let order of showSelected[0].Platinum">
+          <input type="checkbox" [checked]="order.status == 1" [disabled]="order.status == 1" [value]="order.id"
+            (change)="onCheckboxChange(2,$event)">
+          {{order.sheetName}}
+        </label>
+      </div>
+      <div class="form-group">
+        <label *ngFor="let order of showSelected[0].Silver">
+          <input type="checkbox" [checked]="order.status == 1" [disabled]="order.status == 1" [value]="order.id"
+            (change)="onCheckboxChange(3,$event)">
+          {{order.sheetName}}
+        </label>
+      </div>
+      <button class="btn btn-primary btn-sm" (click)="tickedDetails()">Next</button>
+    </form>
+  </div>
+
+  <div *ngIf="bookTicketHideShow == 2">
+    <div *ngFor="let item of bookedTickedTotal">
+      <p>Successfully Booked - Show {{item.show}}</p>
+      <p>Subtotal Rs. - {{item.total}} </p>
+      <p>Service Tax @14%; Rs. - {{item.serviceTex}}</p>
+      <p>Swachh Bharat Cess @0.5%; Rs. {{item.swachBharatTex}}</p>
+      <p>Krishi Kalyan Cess @0.5%; Rs. {{item.krishiKalyanTex}}</p>
+      <p>Total Rs. {{item.grandTotal}}</p>
+    </div>
+    <!-- <button type="button" class="btn btn-primary btn-sm" (click)="tickedDetails()">Back</button> -->
+    <button type="button" class="btn btn-success btn-sm" (click)="tickedBook()">Book</button>
+  </div>
+
+  <div *ngIf="bookTicketHideShow == 3">
+    <div *ngFor="let item of bookedTickedTotal">
+      <p>Revenue Rs. - {{item.total}} </p>
+      <p>Service Tax @14%; Rs. - {{item.serviceTex}}</p>
+      <p>
+        Swachh Bharat Cess @0.5%; Rs. {{item.swachBharatTex}},
+        Krishi Kalyan Cess @0.5%; Rs. {{item.krishiKalyanTex}}
+      </p>
+    </div>
+    <button type="button" class="btn btn-primary btn-sm" (click)="homePart()">Home</button>
+  </div>
+</div>
